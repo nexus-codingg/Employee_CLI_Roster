@@ -4,6 +4,9 @@ const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
+const util = require("util");
+
+const writeFileAsync = util.promisify(fs.writeFile);
 
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
@@ -94,6 +97,16 @@ const managerPrompts = () => {
         type: 'input',
         name: 'managerNumber',
         message: 'Please enter the office number for the manager you are adding to your team.',
+        validate: function (value) {
+            let pass = value.match(
+                // using regex to make sure the user only enters 10 numbers, with dashes/spaces, i.e 000-000-0000
+                /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
+            );
+            if (pass) {
+                return true;
+            }
+            return 'Please enter a valid phone number; example format: 123-456-7890'
+        },
     };
     // attaches the answers from our commonInputs() to our manager answers and returns all the information
     const managerInfo = commonInputs.concat(managerPrompt);
@@ -160,13 +173,30 @@ function addMorePrompt() {
         if (answers.addAnotherEmployee) {
             selectEmployee();
         } else {
-            console.log('Thanks for using CLI Employee Summary Generator! Your team page has been created.');
+            console.log('Thanks for using CLI Employee Summary Generator! See you next time.');
             //When the user has finished entering all team members, call a function to render
             //the HTML and generate the team page
             outputTeamHTML(team);
 
         };
     });
+};
+
+// Generate and write the rendered HTML to a file named `team.html` in the `output` folder.
+const outputTeamHTML = async (team) => {
+    try {
+        const teamHTML = await render(team);
+        fs.writeFile(outputPath, teamHTML, (err) => {
+            if (err) {
+                throw err;
+            } else {
+                console.log('Success! Your team page has been generated.');
+            }
+        }
+        )
+    } catch (error) {
+        throw error;
+    };
 };
 
 startTeam();
