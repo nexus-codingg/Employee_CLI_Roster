@@ -25,7 +25,7 @@ A Node CLI that takes in information about employees and generates an HTML webpa
 ## Installation
 - To start the program, enter ```node app.js``` into the command line.
 - Follow the prompts to enter information for your team members.
-- When done, a team.html file will be generated in the output directory. See the Demo section above for examples of the finished product.
+- When done, a team.html file will be generated in the output directory.
 - 
 
 ## Tecnologies
@@ -38,5 +38,5 @@ This application was made using:
 - To run tests, enter ```npm run test``` in the command line.
 
 ## Usage
-- Use this app to create a clean, stylish org chart for your team with handy information and contact links.
+- Use this app to create a chart that is easy to review employee information
 
