@@ -21,12 +21,10 @@ A Node CLI that takes in information about employees and generates an HTML webpa
 <img src="Assets/Images/CLI_Employee_Roster_Tablet.png" alt="tablet screenshot" width="400">
 
 
-
 ## Installation
 - To start the program, enter ```node app.js``` into the command line.
 - Follow the prompts to enter information for your team members.
 - When done, a team.html file will be generated in the output directory.
-- 
 
 ## Tecnologies
 This application was made using:
